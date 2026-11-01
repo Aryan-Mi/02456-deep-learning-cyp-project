@@ -2,6 +2,7 @@
 
 To add a head, write a class taking (in_dim, n_targets, **options), register it in
 READOUTS and add conf/readout/<name>.yaml. Use it with e.g. readout=<name>."""
+
 from torch import nn
 
 
@@ -29,9 +30,9 @@ class MLPReadout(nn.Module):
         return self.mlp(x)
 
 
-READOUTS = {'linear': LinearReadout, 'mlp': MLPReadout}
+READOUTS = {"linear": LinearReadout, "mlp": MLPReadout}
 
 
 def build_readout(cfg, in_dim, n_targets):
-    options = {k: v for k, v in cfg.items() if k != 'type'}
+    options = {k: v for k, v in cfg.items() if k != "type"}
     return READOUTS[cfg.type](in_dim, n_targets, **options)
