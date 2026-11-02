@@ -1,12 +1,18 @@
-# CYP Inhibition 🧬 - Starter code
+# 02456 Deep Learning - Project 3 (CYP Inhibition 🧬)
 
-**[Leaderboard](https://khelverskovp.github.io/dtu-cyp-leaderboard/)** · [Atom-JEPA](https://github.com/khelverskovp/atom-jepa) · [Dataset](https://huggingface.co/datasets/openadmet/cyp-challenge-train-test)
+This repository contains:
 
-This repository contains the starter code to get started on the DTU Deep Learning project **Predicting CYP Inhibition with Molecular Foundation Models**.
+- The starter code to get started on the DTU Deep Learning project **Predicting CYP Inhibition with Molecular Foundation Models**
+- The group 46's results and experiments of fine-tuning pre-trained models to achieve better predictions, results and transferred learning.
 
-The data comes from the [OpenADMET CYP Inhibition Blind Challenge](https://huggingface.co/spaces/openadmet/cyp-challenge). The challenge ends on November 3, 2026, before this project starts, so we repurpose its training data for this project: we split it into our own train/validation/test sets and run our own leaderboard.
+## Initial Setup
 
-The repo gives you a simple, working fine-tuning setup to build on:
+The data comes from:
+
+- [OpenADMET CYP Inhibition Blind Challenge](https://huggingface.co/spaces/openadmet/cyp-challenge)
+- [Hugginface Dataset](https://huggingface.co/datasets/openadmet/cyp-challenge-train-test)
+
+The repo gave a simple, working fine-tuning setup to build on:
 
 - **Atom-JEPA**: code for loading the pretrained Atom-JEPA model and fine-tuning it with a simple readout head.
 - **Four baselines** to compare against: an MLP on Morgan fingerprints, on RDKit descriptors, and on both, plus LightGBM on both.
@@ -18,24 +24,27 @@ Along the way you can submit your test predictions to the [project leaderboard](
 
 ## What is in the repo
 
-| Path | What it does |
-|---|---|
-| `prepare_data.py` | Downloads the two datasets, generates 3D conformers and splits each into 70/15/15 train/val/test |
-| `finetune.py` | Trains one model, picks the best epoch on validation, then evaluates on test |
-| `models/atom_jepa.py` | Atom-JEPA encoder + readout head |
-| `models/baselines.py` | Morgan / RDKit features + readout head |
-| `models/gbm.py` | LightGBM on Morgan + RDKit features |
-| `models/readouts.py` | Readout heads (linear, MLP). **Add your own here** |
-| `conf/` | [Hydra](https://hydra.cc) configs: `config.yaml` (shared), `model/` (one per model), `readout/` (one per head) |
-| `prepare_data.sh`, `finetune.sh` | DTU HPC job scripts. Logs go to `outputs/` |
+| Path                             | What it does                                                                                                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `prepare_data.py`                | Downloads the two datasets, generates 3D conformers and splits each into 70/15/15 train/val/test               |
+| `finetune.py`                    | Trains one model, picks the best epoch on validation, then evaluates on test                                   |
+| `models/atom_jepa.py`            | Atom-JEPA encoder + readout head                                                                               |
+| `models/baselines.py`            | Morgan / RDKit features + readout head                                                                         |
+| `models/chemeleon.py`            | CheMeleon graph encoder + shared readout head                                                                  |
+| `models/gbm.py`                  | LightGBM on Morgan + RDKit features                                                                            |
+| `models/readouts.py`             | Readout heads (linear, MLP). **Add your own here**                                                             |
+| `conf/`                          | [Hydra](https://hydra.cc) configs: `config.yaml` (shared), `model/` (one per model), `readout/` (one per head) |
+| `prepare_data.sh`, `finetune.sh` | DTU HPC job scripts. Logs go to `outputs/`                                                                     |
 
 ## Setup
+
+Install dependepcie:
 
 ```bash
 uv sync
 ```
 
-## Fetch Data
+Fetch (reproducicble) data
 
 ```bash
 uv run python -u prepare_data.py --out data --workers 1 --seed 42
@@ -57,7 +66,7 @@ bsub -env "MODEL=morgan_mlp, TASK=classification" < finetune.sh
 bsub -env "MODEL=atom_jepa, OVERRIDES=readout=linear train.epochs=10" < finetune.sh
 ```
 
-`MODEL` is `atom_jepa`, `morgan_mlp`, `rdkit_mlp`, `morgan_rdkit_mlp` or `morgan_rdkit_lgbm`. `TASK` is `regression` or `classification`. `OVERRIDES` takes any Hydra settings, separated by spaces. Check jobs with `bjobs`.
+`MODEL` is `atom_jepa`, `morgan_mlp`, `rdkit_mlp`, `morgan_rdkit_mlp`, `morgan_rdkit_lgbm` or `chemeleon`. `TASK` is `regression` or `classification`. `OVERRIDES` takes any Hydra settings, separated by spaces. Check jobs with `bjobs`.
 
 ## Tasks and results
 
@@ -88,13 +97,14 @@ The original challenge ends before this project starts, so we run our own leader
 
 ## Models and readouts
 
-| `model=` | Input | Default readout |
-|---|---|---|
-| `atom_jepa` | 3D conformer → pretrained Atom-JEPA encoder (fine-tuned) | `mlp` |
-| `morgan_mlp` | Morgan count fingerprint | `mlp` |
-| `rdkit_mlp` | 200 normalized RDKit descriptors | `mlp` |
-| `morgan_rdkit_mlp` | Both, concatenated | `mlp` |
-| `morgan_rdkit_lgbm` | Both, concatenated | none (LightGBM) |
+| `model=`            | Input                                                    | Default readout |
+| ------------------- | -------------------------------------------------------- | --------------- |
+| `atom_jepa`         | 3D conformer → pretrained Atom-JEPA encoder (fine-tuned) | `mlp`           |
+| `morgan_mlp`        | Morgan count fingerprint                                 | `mlp`           |
+| `rdkit_mlp`         | 200 normalized RDKit descriptors                         | `mlp`           |
+| `morgan_rdkit_mlp`  | Both, concatenated                                       | `mlp`           |
+| `morgan_rdkit_lgbm` | Both, concatenated                                       | none (LightGBM) |
+| `chemeleon`         | SMILES → 2D graph → pretrained CheMeleon encoder         | `mlp`           |
 
 The MLP baselines follow those in the [Atom-JEPA repository](https://github.com/khelverskovp/atom-jepa). Any readout works with any neural model, e.g. `model=atom_jepa readout=linear`. `morgan_rdkit_lgbm` is a gradient-boosted tree baseline outside the epoch loop: one LightGBM model per enzyme, with early stopping on validation.
 
