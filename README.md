@@ -50,6 +50,15 @@ Fetch (reproducicble) data
 uv run python -u prepare_data.py --out data --workers 1 --seed 42
 ```
 
+Fetching the pretrained CheMeleon encoder checkpoint:
+
+```bash
+uv run python fetch_chemeleon.py
+```
+
+This saves the pretrained weights in the checkpoints folder which is gitignored.
+And that script is copied from their docs at: [Initializing CheMeleon](https://chemprop.readthedocs.io/en/latest/chemeleon_foundation_finetuning.html)
+
 ## Run on DTU HPC
 
 **1. Prepare the data (once).** This writes `data/regression/` and `data/classification/` (each with `train.csv`, `val.csv`, `test.csv`) and takes a few minutes. Open a terminal and run:
