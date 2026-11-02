@@ -6,14 +6,15 @@ defaults:
   - readout: mlp
   - model: atom_jepa
 
-task: regression        # regression | classification
-data: data              # Output folder of prepare_data.py
+task: regression # regression | classification
+data: data # Output folder of prepare_data.py
 seed: 42
+experiment_name: manual
 device: cuda
-evaluate_test: false     # Enable only for Part 5.
+evaluate_test: false # Enable only for Part 5.
 
 hydra:
   run:
-    dir: runs/${task}/${model.name}/${now:%Y-%m-%d_%H-%M-%S}
+    dir: runs/${task}/${model.name}/${experiment_name}/${now:%Y-%m-%d_%H-%M-%S-%f}
   job:
     chdir: false
