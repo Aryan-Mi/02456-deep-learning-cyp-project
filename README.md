@@ -32,13 +32,13 @@ Along the way you can submit your test predictions to the [project leaderboard](
 ## Setup
 
 ```bash
-git clone https://github.com/khelverskovp/dtu-cyp-project.git
-cd dtu-cyp-project
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cu124
-python -m pip install -r requirements.txt
+uv sync
+```
+
+## Fetch Data
+
+```bash
+uv run python -u prepare_data.py --out data --workers 1 --seed 42
 ```
 
 ## Run on DTU HPC

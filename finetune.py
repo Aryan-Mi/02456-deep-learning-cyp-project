@@ -53,7 +53,10 @@ def metrics(frame, predictions, targets, task):
             high = frame[target + "_conf_high"].to_numpy(dtype=float)[mask]
             if not (np.isfinite(low).all() and np.isfinite(high).all() and (low <= high).all()):
                 raise ValueError(f"Invalid credible intervals for {target}")
-            distance = lambda p: np.maximum(low - p, 0) + np.maximum(p - high, 0)
+
+            def distance(p):
+                return np.maximum(low - p, 0) + np.maximum(p - high, 0)
+
             denom = distance(y.mean()).sum()
             result[target] = {
                 "MAE": float(mean_absolute_error(y, pred)),

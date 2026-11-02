@@ -20,7 +20,7 @@ dependencies = [
 
 [dependency-groups]
 dev = ["ruff>=0.11,<1"]
-notebook = ["jupyterlab>=4.3,<5", "jupytext>=1.17,<2", "ipykernel>=6.29,<8"]
+notebook = ["jupyterlab>=4.3,<5", "ipykernel>=6.29,<8"]
 tuning = ["optuna>=4,<5"]
 
 [tool.uv]
