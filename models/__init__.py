@@ -6,5 +6,10 @@ The LightGBM baseline (models/gbm.py, model.type=lightgbm) is handled separately
 
 from models.atom_jepa import AtomJEPAModel
 from models.baselines import FeatureModel
+from models.chemeleon import CheMeleonModel
 
-MODELS = {"atom_jepa": AtomJEPAModel, "features": FeatureModel}
+MODELS = {
+    "atom_jepa": AtomJEPAModel,
+    "features": FeatureModel,
+    "chemeleon": CheMeleonModel,
+}
