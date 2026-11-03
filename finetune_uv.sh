@@ -21,4 +21,4 @@ export HF_HOME="${HF_HOME:-$PWD/.hf_cache}"
 
 nvidia-smi
 uv run --no-sync python -c 'import torch; assert torch.cuda.is_available(), "CUDA-enabled PyTorch/GPU required"; print(torch.__version__, torch.version.cuda)'
-uv run --no-sync python -u finetune.py model="$MODEL" task="$TASK" $OVERRIDES seed=42 device=cuda
+uv run --no-sync python -u finetune.py model="$MODEL" task="$TASK" $OVERRIDES seed="${SEED:-42}" device=cuda
