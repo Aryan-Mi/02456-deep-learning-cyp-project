@@ -13,6 +13,12 @@ experiment_name: manual
 device: cuda
 evaluate_test: false # Enable only for Part 5.
 
+train:
+  head_only_epochs: 0 # Number of epochs to train only head, before updating encoder too
+  reduce_lr: false # When enabled, learning rates get lowered if validation stops improving
+  lr_factor: 0.5 # controls the factor if reducing learning rates is enabled
+  lr_patience: 2 # controls how long to wait if reducing learning rates is enabled
+
 hydra:
   run:
     dir: runs/${task}/${model.name}/${experiment_name}/${now:%Y-%m-%d_%H-%M-%S-%f}

@@ -100,6 +100,11 @@ def train_torch(cfg, train, val, targets, task, data, out):
     """Trains a torch model with the epoch loop; returns a function frame -> predictions."""
     if cfg.train.epochs < 1 or cfg.train.batch_size < 1:
         raise ValueError("epochs and batch_size must be positive")
+    head_only_epochs = cfg.train.head_only_epochs
+    if not 0 <= head_only_epochs < cfg.train.epochs:
+        raise ValueError("head_only_epochs must be between 0 and epochs - 1")
+    if head_only_epochs and (cfg.model.type != "chemeleon" or cfg.model.freeze_encoder):
+        raise ValueError("Head warmup needs CheMeleon with model.freeze_encoder=false")
     model = MODELS[cfg.model.type](cfg.model, cfg.readout, len(targets), data, cfg.device)
     model.fit_preprocessing(train)  # Feature scaling etc. is fitted on the training split ONLY.
     mean = torch.zeros(len(targets), device=model.device)
@@ -115,10 +120,24 @@ def train_torch(cfg, train, val, targets, task, data, out):
     batch_size = cfg.train.batch_size
     train_loader = model.loader(train, targets, batch_size, shuffle=True)
     val_loader = model.loader(val, targets, batch_size)
+    # Staged runs start with both parameter groups, so unfreezing keeps the optimizer.
     optimizer = torch.optim.AdamW(model.param_groups(), weight_decay=cfg.train.weight_decay)
+    scheduler = None
+    if cfg.train.reduce_lr:
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer,
+            mode="min" if task == "regression" else "max",
+            factor=cfg.train.lr_factor,
+            patience=cfg.train.lr_patience,
+            threshold=0.0,
+        )
     best = float("inf")
     for epoch in range(1, cfg.train.epochs + 1):
         model.train()
+        if head_only_epochs:
+            model.encoder.requires_grad_(epoch > head_only_epochs)
+            if epoch <= head_only_epochs:
+                model.encoder.eval()
         loss_sum, observed = 0.0, 0
         for batch in train_loader:
             y = batch["y"].to(model.device)
@@ -142,6 +161,11 @@ def train_torch(cfg, train, val, targets, task, data, out):
             raise ValueError("Validation metric undefined; check endpoint coverage and split")
         selection = primary if task == "regression" else -primary
         record = {"epoch": epoch, "train_loss": loss_sum / observed, **score}
+        if head_only_epochs or scheduler is not None:
+            record["encoder_frozen"] = (
+                cfg.model.get("freeze_encoder", False) or epoch <= head_only_epochs
+            )
+            record["learning_rates"] = [group["lr"] for group in optimizer.param_groups]
         with (out / "history.jsonl").open("a") as f:
             f.write(json.dumps(record) + "\n")
         print(json.dumps(record), flush=True)
@@ -157,6 +181,8 @@ def train_torch(cfg, train, val, targets, task, data, out):
                 },
                 out / "best.pt",
             )
+        if scheduler is not None and epoch > head_only_epochs:
+            scheduler.step(primary)
     saved = torch.load(out / "best.pt", map_location=model.device, weights_only=True)
     model.load_state_dict(saved["model"])
     mean, std = saved["mean"], saved["std"]
