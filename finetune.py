@@ -16,7 +16,6 @@ import torch
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import OmegaConf
 from sklearn.metrics import (
-    accuracy_score,
     average_precision_score,
     matthews_corrcoef,
     mean_absolute_error,
@@ -68,7 +67,6 @@ def metrics(frame, predictions, targets, task):
         else:
             both = len(np.unique(y)) == 2
             result[target] = {
-                "Accuracy": float(accuracy_score(y, pred >= 0.5)),
                 "MCC": float(matthews_corrcoef(y, pred >= 0.5)),
                 "AUROC": float(roc_auc_score(y, pred)) if both else None,
                 "AP": float(average_precision_score(y, pred)) if both else None,
