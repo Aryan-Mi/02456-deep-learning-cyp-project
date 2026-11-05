@@ -1,0 +1,18 @@
+# @package _global_
+# CheMeleon molecular graph encoder with a new prediction head.
+defaults:
+  - override /readout: mlp
+
+model:
+  name: chemeleon
+  type: chemeleon
+  checkpoint: checkpoints/chemeleon_mp.pt
+  freeze_encoder: true
+  encoder_lr: 1.0e-5
+  readout_lr: 1.0e-3
+
+train:
+  epochs: 20
+  batch_size: 32
+  weight_decay: 1.0e-4
+  grad_clip: 1.0

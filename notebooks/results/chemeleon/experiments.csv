@@ -1,0 +1,41 @@
+task,seed,batch_size,weight_decay,head_only_epochs,reduce_lr,lr_patience,best_validation_score,best_epoch,epochs,evaluate_test,test_score,encoder_lr,head_lr,configuration,run_kind,freeze_encoder,readout_type,hidden_dim,dropout
+classification,42,32,0.0001,0,False,,0.23669296031244458,8,20,False,,1e-05,0.001,Frozen encoder,experimenting,True,mlp,512,0.1
+classification,42,32,0.0001,0,False,,0.29980763668974597,16,20,False,,1e-05,0.001,Full fine-tuning,experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,False,,0.2647149538395281,11,20,False,,3e-06,0.001,Encoder learning rate 3e-6,experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,False,,0.29304430170718443,9,20,False,,1e-05,0.001,MLP width 256,experimenting,False,mlp,256,0.1
+classification,42,32,0.0001,0,False,,0.21881538902551226,19,20,False,,1e-05,0.001,"Linear head, 20 epochs",experimenting,False,linear,,
+classification,42,32,0.0001,0,False,,0.2811011122321209,17,20,False,,1e-05,0.001,Dropout 0.3,experimenting,False,mlp,512,0.3
+regression,42,32,0.0001,0,False,,0.7122523719964812,4,20,False,,1e-05,0.001,Frozen encoder,experimenting,True,mlp,512,0.1
+regression,42,32,0.0001,0,False,,0.7037497023736425,4,20,False,,1e-05,0.001,Full fine-tuning,experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,0,False,,0.7174625415704751,4,20,False,,3e-06,0.001,Encoder learning rate 3e-6,experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,0,False,,0.723091562211061,5,20,False,,1e-05,0.001,MLP width 256,experimenting,False,mlp,256,0.1
+regression,42,32,0.0001,0,False,,0.7245652319402291,10,20,False,,1e-05,0.001,"Linear head, 20 epochs",experimenting,False,linear,,
+regression,42,32,0.0001,0,False,,0.7054024386068042,7,20,False,,1e-05,0.001,Dropout 0.3,experimenting,False,mlp,512,0.3
+classification,42,32,0.0001,0,False,,0.2660733728930293,8,40,False,,1e-05,0.001,"MLP, 40 epochs",experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,False,,0.27161288414769885,25,40,False,,1e-05,0.001,"Linear head, 40 epochs",experimenting,False,linear,,
+regression,42,32,0.0001,0,False,,0.7192070729528421,6,20,False,,1e-05,0.0003,Head LR 3e-4 + dropout 0.3,experimenting,False,mlp,512,0.3
+regression,42,32,0.0001,0,False,,0.7195788943545305,8,20,False,,1e-05,0.0003,Head learning rate 3e-4,experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,False,,0.27161288414769885,25,40,False,,1e-05,0.001,"Linear head, 40 epochs",repeat,False,linear,,
+classification,42,32,0.0001,0,False,,0.26887657972816986,13,20,False,,1e-05,0.001,Full fine-tuning,repeat,False,mlp,512,0.1
+classification,43,32,0.0001,0,False,,0.2767601493561651,9,20,False,,1e-05,0.001,Full fine-tuning,seed_check,False,mlp,512,0.1
+classification,43,32,0.0001,0,False,,0.259220732329468,19,40,False,,1e-05,0.001,"Linear head, 40 epochs",seed_check,False,linear,,
+classification,44,32,0.0001,0,False,,0.2907009948609763,7,20,False,,1e-05,0.001,Full fine-tuning,seed_check,False,mlp,512,0.1
+classification,44,32,0.0001,0,False,,0.2632341467936048,25,40,False,,1e-05,0.001,"Linear head, 40 epochs",seed_check,False,linear,,
+classification,42,32,0.001,0,False,,0.26006412176349863,20,20,False,,1e-05,0.001,Weight decay 1e-3,experimenting,False,mlp,512,0.1
+classification,42,64,0.0001,0,False,,0.29014179124439377,8,20,False,,1e-05,0.001,Batch size 64,experimenting,False,mlp,512,0.1
+regression,42,32,0.001,0,False,,0.7056006493014289,4,20,False,,1e-05,0.001,Weight decay 1e-3,experimenting,False,mlp,512,0.1
+regression,42,64,0.0001,0,False,,0.7226780642547703,2,20,False,,1e-05,0.001,Batch size 64,experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,2,False,2,0.27956021991576063,13,20,False,,1e-05,0.001,"Head first, 2 epochs",experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,True,2,0.2707547951827768,15,20,False,,1e-05,0.001,"LR reductions, patience 2",experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,2,False,2,0.7239753076356849,4,20,False,,1e-05,0.001,"Head first, 2 epochs",experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,0,True,2,0.7098815155776673,4,20,False,,1e-05,0.001,"LR reductions, patience 2",experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,2,True,2,0.26065070185415645,8,20,False,,1e-05,0.001,Head first 2 + LR reductions,experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,2,True,2,0.7261653389622137,4,20,False,,1e-05,0.001,Head first 2 + LR reductions,experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,False,2,0.263577727374547,19,20,True,0.1859528458901617,1e-05,0.001,Full fine-tuning,evaluating,False,mlp,512,0.1
+classification,42,32,0.0001,5,False,2,0.279826415791531,19,20,False,,1e-05,0.001,"Head first, 5 epochs",experimenting,False,mlp,512,0.1
+classification,42,32,0.0001,0,True,1,0.2711169671088488,15,20,False,,1e-05,0.001,Earlier LR reductions,experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,0,False,2,0.7046778640930009,4,20,True,0.7376453229300912,1e-05,0.001,Full fine-tuning,evaluating,False,mlp,512,0.1
+regression,42,32,0.0001,5,False,2,0.7109467826279617,4,20,False,,1e-05,0.001,"Head first, 5 epochs",experimenting,False,mlp,512,0.1
+regression,42,32,0.0001,0,True,0,0.7120858480042198,4,20,False,,1e-05,0.001,Earlier LR reductions,experimenting,False,mlp,512,0.1
+classification,44,32,0.0001,5,False,2,0.28057013950593723,9,20,False,,1e-05,0.001,"Head first, 5 epochs",seed_check,False,mlp,512,0.1
+classification,43,32,0.0001,5,False,2,0.2615908409202323,12,20,False,,1e-05,0.001,"Head first, 5 epochs",seed_check,False,mlp,512,0.1

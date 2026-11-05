@@ -6,13 +6,21 @@ defaults:
   - readout: mlp
   - model: atom_jepa
 
-task: regression        # regression | classification
-data: data              # Output folder of prepare_data.py
+task: regression # regression | classification
+data: data # Output folder of prepare_data.py
 seed: 42
+experiment_name: manual
 device: cuda
+evaluate_test: false # Enable only for Part 5.
+
+train:
+  head_only_epochs: 0 # Number of epochs to train only head, before updating encoder too
+  reduce_lr: false # When enabled, learning rates get lowered if validation stops improving
+  lr_factor: 0.5 # controls the factor if reducing learning rates is enabled
+  lr_patience: 2 # controls how long to wait if reducing learning rates is enabled
 
 hydra:
   run:
-    dir: runs/${task}/${model.name}/${now:%Y-%m-%d_%H-%M-%S}
+    dir: runs/${task}/${model.name}/${experiment_name}/${now:%Y-%m-%d_%H-%M-%S-%f}
   job:
     chdir: false
