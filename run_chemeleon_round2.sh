@@ -8,17 +8,17 @@ TASKS="regression classification"
  
 
 CONFIGS=(
-  "01_frozen_linear   | readout=linear readout.dropout=0 train.weight_decay=0"
+  "01_frozen_linear   | readout=linear train.weight_decay=0"
   "01_frozen_mlp      | readout=mlp    readout.dropout=0 train.weight_decay=0"
  
   # unfreeze
-  "02_unfrozen_linear | readout=linear readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false"
+  "02_unfrozen_linear | readout=linear train.weight_decay=0 model.freeze_encoder=false"
   "02_unfrozen_mlp    | readout=mlp    readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false"
  
   #  warmup
-  "03_warmup_lr1e-5_linear | readout=linear readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-5"
+  "03_warmup_lr1e-5_linear | readout=linear train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-5"
   "03_warmup_lr1e-5_mlp    | readout=mlp    readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-5"
-  "03_warmup_lr1e-4_linear | readout=linear readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-4"
+  "03_warmup_lr1e-4_linear | readout=linear train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-4"
   "03_warmup_lr1e-4_mlp    | readout=mlp    readout.dropout=0 train.weight_decay=0 model.freeze_encoder=false train.head_only_epochs=5 model.encoder_lr=1e-4"
  
   # dropout in Mlp
