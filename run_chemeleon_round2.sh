@@ -44,7 +44,7 @@ for entry in "${CONFIGS[@]}"; do
       if [[ "$DRY" == "-n" ]]; then
         echo "$n  $task  seed=$seed  $full"
       else
-        MODEL=chemeleon TASK="$task" SEED="$seed" OVERRIDES="$full" bsub < finetune_uv.sh
+        bsub -env "MODEL=chemeleon,TASK=$task,SEED=$seed,OVERRIDES=$full" < finetune_uv.sh
         sleep 0.3
       fi
     done
