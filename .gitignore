@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 data/
 runs/
+runs2/
 outputs/*
 !outputs/.gitkeep
 
