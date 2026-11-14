@@ -17,6 +17,7 @@ dependencies = [
   "descriptastorus==2.8.0",
   "lightgbm==4.6.0",
   "matplotlib>=3.9,<4",
+  "seaborn>=0.13.2",
 ]
 
 [dependency-groups]
