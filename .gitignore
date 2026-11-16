@@ -11,3 +11,6 @@ outputs/*
 .pytest_cache/
 .ruff_cache/
 checkpoints/
+
+runs/
+runs2/
