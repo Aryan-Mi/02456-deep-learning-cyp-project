@@ -77,7 +77,7 @@ class LightGBMModel:
     def features(self, frame):
         blocks = []
 
-        if self.cfg.get("use embeddings", False):
+        if self.cfg.get("use_embeddings", False):
             blocks.append(self.embeddings(frame))
 
         for name in self.cfg.featurizers:
@@ -92,6 +92,7 @@ class LightGBMModel:
     def fit(self, train, val, targets, task, out):
         """Fits one booster per target on its labelled rows; returns the best iterations."""
         self.task = task
+        self.targets = list(targets)
         Xt, Xv = self.features(train), self.features(val)
         cls = lgb.LGBMRegressor if task == "regression" else lgb.LGBMClassifier
         best = {}
