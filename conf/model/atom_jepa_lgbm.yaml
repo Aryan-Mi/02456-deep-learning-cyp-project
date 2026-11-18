@@ -1,0 +1,28 @@
+# @package _global_
+
+model:
+  name: atom_jepa_lgbm
+  type: lightgbm
+  use_embeddings: true
+  checkpoint: molecules
+  precision: fp32
+  embed_batch_size: 32
+
+  featurizers: []
+  morgan:
+    radius: 2
+    n_bits: 1024
+    use_counts: true
+  feature_workers: 4
+
+  early_stopping_rounds: 200
+  params:                 
+    n_estimators: 5000
+    learning_rate: 0.03
+    num_leaves: 31
+    min_child_samples: 20
+    subsample: 0.8
+    subsample_freq: 1
+    colsample_bytree: 0.3
+    reg_lambda: 1.0
+    n_jobs: 4
