@@ -30,6 +30,50 @@ class LightGBMModel:
         self.targets = []
         self.encoder = None
 
+    def load_encoder(self):
+        if self.encoder is None:
+            print("Loading Atom-JEPA encoder...")
+
+            self.encoder = AtomJEPA.from_pretrained(self.cfg.checkpoint, device=self.device, precision=self.cfg.precisio, cuequivariance=False)
+            self.encoder.eval()
+
+            for p in self.encoder.parameters():
+                p.requires_grad = False
+
+        return self.encoder
+
+    def embeddings(self, frame):
+        self.cache.mkdir(exist_ok=True, parents=True)
+        keys = list(frame["key"].astype(str))
+        number = len(keys)
+        first = keys[0]
+        last = keys[-1]
+        filename = f"{number}_{first}_{last}.npy"
+        path = self.cache / filename
+
+        if path.exists():
+            return np.load(path)
+
+        encoder = self.load_encoder()
+        loader = DataLoader(Conformers(frame, self.conformers, self.targets), batch_size=self.cfg.embed_batch_size, collate_fn=encoder.collate, num_workers = 0)
+
+        pieces = []
+        with torch.no_grad():
+            for batch in loader:
+                output = encoder(batch)
+                pieces.append(output.float().cpu().numpy())
+
+        values = np.concatenate(pieces)
+
+        if len(values) != len(frame):
+            raise RuntimeError(f"Got {len(values)} embeddings for {len(frame)} molecules")
+        if not np.isfinite(values).all():
+            raise RuntimeError("The encoder produced NaN or infinite embeddings")
+
+        print("Embeddings:", values.shape, "saved as", path.name)
+        np.save(path, values)
+        return values
+
     def features(self, frame):
         return np.concatenate(
             [
