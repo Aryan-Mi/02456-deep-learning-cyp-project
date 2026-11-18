@@ -103,8 +103,8 @@ def train_torch(cfg, train, val, targets, task, data, out):
     head_only_epochs = cfg.train.head_only_epochs
     if not 0 <= head_only_epochs < cfg.train.epochs:
         raise ValueError("head_only_epochs must be between 0 and epochs - 1")
-    if head_only_epochs and (cfg.model.type != "chemeleon" or cfg.model.freeze_encoder):
-        raise ValueError("Head warmup needs CheMeleon with model.freeze_encoder=false")
+    if head_only_epochs and (cfg.model.type not in ("chemeleon", "atom_jepa") or cfg.model.freeze_encoder):
+        raise ValueError("Head warmup needs CheMeleon or Atom-JEPA with model.freeze_encoder=false")
     model = MODELS[cfg.model.type](cfg.model, cfg.readout, len(targets), data, cfg.device)
     model.fit_preprocessing(train)  # Feature scaling etc. is fitted on the training split ONLY.
     mean = torch.zeros(len(targets), device=model.device)
