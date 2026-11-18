@@ -75,13 +75,19 @@ class LightGBMModel:
         return values
 
     def features(self, frame):
-        return np.concatenate(
-            [
-                load_features(frame, n, self.kwargs[n], self.folder, self.cfg.feature_workers)
-                for n in self.cfg.featurizers
-            ],
-            axis=1,
-        )
+        blocks = []
+
+        if self.cfg.get("use embeddings", False):
+            blocks.append(self.embeddings(frame))
+
+        for name in self.cfg.featurizers:
+            descriptiors = load_features(frame, name, self.kwargs[name], self.folder, self.cfg.feature_workers)
+            blocks.append(descriptiors)
+
+        if not blocks:
+            raise ValueError("No features selected: set use_embeddings or list featurizers")
+
+        return np.concatenate(blocks, axis=1)
 
     def fit(self, train, val, targets, task, out):
         """Fits one booster per target on its labelled rows; returns the best iterations."""
