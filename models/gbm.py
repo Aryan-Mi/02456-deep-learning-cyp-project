@@ -5,8 +5,11 @@ import warnings
 
 import lightgbm as lgb
 import numpy as np
+import torch
+from torch.utils.data import DataLoader
 from omegaconf import OmegaConf
-
+from models.atom_jepa import Conformers
+from atom_jepa import AtomJEPA
 from models.baselines import load_features
 
 # LightGBM names the columns itself; sklearn then warns on plain arrays.
@@ -14,12 +17,18 @@ warnings.filterwarnings("ignore", message="X does not have valid feature names")
 
 
 class LightGBMModel:
-    def __init__(self, cfg, data_dir, seed):
+    def __init__(self, cfg, data_dir, seed, device="cuda"):
         self.cfg, self.folder, self.seed = cfg, data_dir / "features", seed
         self.kwargs = {
             n: OmegaConf.to_container(cfg[n]) if n in cfg else {} for n in cfg.featurizers
         }
         self.task, self.boosters = None, []
+
+        self.device = device
+        self.conformers = data_dir / "conformers"
+        self.cache = data_dir / "embeddings"
+        self.targets = []
+        self.encoder = None
 
     def features(self, frame):
         return np.concatenate(
