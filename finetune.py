@@ -118,6 +118,10 @@ def train_torch(cfg, train, val, targets, task, data, out):
     optimizer = torch.optim.AdamW(model.param_groups(), weight_decay=cfg.train.weight_decay)
     best = float("inf")
     for epoch in range(1, cfg.train.epochs + 1):
+        if hasattr(model, "on_epoch_start"):
+            freeze_state = model.on_epoch_start(epoch, optimizer)
+        else:
+            freeze_state = {}
         model.train()
         loss_sum, observed = 0.0, 0
         for batch in train_loader:
@@ -141,7 +145,9 @@ def train_torch(cfg, train, val, targets, task, data, out):
         if primary is None:
             raise ValueError("Validation metric undefined; check endpoint coverage and split")
         selection = primary if task == "regression" else -primary
-        record = {"epoch": epoch, "train_loss": loss_sum / observed, **score}
+        record = {"epoch": epoch, "train_loss": loss_sum / observed}
+        record.update(freeze_state)
+        record.update(score)
         with (out / "history.jsonl").open("a") as f:
             f.write(json.dumps(record) + "\n")
         print(json.dumps(record), flush=True)
