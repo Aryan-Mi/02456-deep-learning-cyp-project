@@ -1,0 +1,12 @@
+# @package _global_
+# Halve the learning rates when validation stops improving.
+defaults:
+  - override /model: chemeleon
+
+experiment_name: task4/reduce_learning_rate
+
+model:
+  freeze_encoder: false
+
+train:
+  reduce_lr: true

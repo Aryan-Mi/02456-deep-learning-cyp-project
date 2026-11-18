@@ -1,0 +1,12 @@
+# @package _global_
+# Train the head for two epochs, then train both pieces.
+defaults:
+  - override /model: chemeleon
+
+experiment_name: task4/head_first_2_epochs
+
+model:
+  freeze_encoder: false
+
+train:
+  head_only_epochs: 2

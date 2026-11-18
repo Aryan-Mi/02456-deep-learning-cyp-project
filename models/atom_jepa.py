@@ -33,21 +33,8 @@ class AtomJEPAModel(nn.Module):
         self.encoder = AtomJEPA.from_pretrained(
             cfg.checkpoint, device=device, precision=cfg.precision, cuequivariance=False
         )
-
-        self.strategy = cfg.freeze.strategy
-        self.warmup_epochs = cfg.freeze.warmup_epochs
-
-        if self.stragegy in ("frozen", "warmup"):
-            self.encoder_is_frozen = True
-        else:
-            self.encoder_is_frozen = False
-
-        for p in self.encoder.parameters():
-            p.requires_grad = not self.encoder_is_frozen
-
-
-        self.encoder.set_grad_checkpointing(not self.encoder_is_frozen)
-
+        self.encoder.set_grad_checkpointing(not cfg.freeze_encoder)
+        self.encoder.requires_grad_(not cfg.freeze_encoder)
         self.readout = build_readout(readout, self.encoder.embedding_dim, n_targets).to(
             self.encoder.device
         )
@@ -58,8 +45,7 @@ class AtomJEPAModel(nn.Module):
 
     def train(self, mode=True):
         super().train(mode)
-
-        if mode and self.encoder_is_frozen:
+        if self.cfg.freeze_encoder:
             self.encoder.eval()
         return self
 
@@ -77,8 +63,7 @@ class AtomJEPAModel(nn.Module):
 
     def param_groups(self):
         groups = [{"params": list(self.readout.parameters()), "lr": self.cfg.readout_lr}]
-        
-        if not self.encoder_is_frozen:
+        if not self.cfg.freeze_encoder:
             groups.append({"params": list(self.encoder.parameters()), "lr": self.cfg.encoder_lr})
         return groups
 

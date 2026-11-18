@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - override /model: chemeleon
+
+experiment_name: task4/init_reg_frozen
+task: regression
+evaluate_test: false
+
+model:
+  freeze_encoder: true
+
+train:
+  epochs: 2
