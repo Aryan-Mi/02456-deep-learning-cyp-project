@@ -34,7 +34,7 @@ class LightGBMModel:
         if self.encoder is None:
             print("Loading Atom-JEPA encoder...")
 
-            self.encoder = AtomJEPA.from_pretrained(self.cfg.checkpoint, device=self.device, precision=self.cfg.precisio, cuequivariance=False)
+            self.encoder = AtomJEPA.from_pretrained(self.cfg.checkpoint, device=self.device, precision=self.cfg.precision, cuequivariance=False)
             self.encoder.eval()
 
             for p in self.encoder.parameters():
