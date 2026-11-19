@@ -24,7 +24,7 @@ CHEMELEON = OmegaConf.create(
             "hidden_dim": 512,
             "num_layers": 3,
             "dropout": 0.3,
-        },
+        }, # to change to epochs 20 and head only 5 before running on GPU
         "train": {
             "epochs": 2,
             "batch_size": 32,
