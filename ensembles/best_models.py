@@ -26,9 +26,9 @@ CHEMELEON = OmegaConf.create(
             "dropout": 0.3,
         },
         "train": {
-            "epochs": 20,
+            "epochs": 2,
             "batch_size": 32,
-            "head_only_epochs": 5,
+            "head_only_epochs": 1,
             "weight_decay": 0.0,
             "grad_clip": 1.0,
             "reduce_lr": False,
@@ -88,7 +88,7 @@ LIGHTGBM = OmegaConf.create(
 
 
 all_models = {
-    # "chemeleon": CHEMELEON,
+    "chemeleon": CHEMELEON,
     # "atom_jepa": ATOM_JEPA,
     "lightgbm": LIGHTGBM,
 }

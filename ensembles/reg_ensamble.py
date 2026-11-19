@@ -41,10 +41,23 @@ def main():
             model_gbm.fit(train_df, val_df, REG, "regression", Path(output_path))
             predict = model_gbm.predict
         else:
-            pass
+            print("Chemeleon")
+            predict = train_torch(params, train_df, val_df, REG, "regression", Path(data_dir), Path(output_path))
         val_pred[model] = predict(val_df)
         test_pred[model] = predict(test_df)
-    print(val_pred)
+        del predict
+        torch.cuda.empty_cache()
+
+    for split, dataset, predictions in [("validation", val_df, val_pred), ("test", test_df, test_pred)]:
+        avg_pred = np.mean(list(predictions.values()), axis=0)
+
+        for model in all_models:
+            print("model")
+            model_score = metrics(dataset, predictions[model], REG, "regression")["macro_ST-RAE"]
+            print(model_score)
+        ensamble_score = metrics(dataset, avg_pred, REG,"regression")["macro_ST-RAE"]
+        print("Ensamble score : ", ensamble_score)
+    
 
 
 if __name__=="__main__":
