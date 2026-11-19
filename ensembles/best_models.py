@@ -88,9 +88,8 @@ LIGHTGBM = OmegaConf.create(
 
 
 all_models = {
-    "chemeleon": CHEMELEON,
-    "atom_jepa": ATOM_JEPA,
+    # "chemeleon": CHEMELEON,
+    # "atom_jepa": ATOM_JEPA,
     "lightgbm": LIGHTGBM,
 }
 
-print(LIGHTGBM)
