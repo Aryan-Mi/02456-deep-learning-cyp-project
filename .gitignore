@@ -12,6 +12,7 @@ outputs/*
 .ruff_cache/
 checkpoints/
 
+runs/
 runs2/
 collect_results_from_runs.py
 notebooks/figures/
