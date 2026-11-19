@@ -1,0 +1,9 @@
+configuration,task,seed,learning_rate,num_leaves,reg_lambda,n_estimators,early_stopping_rounds,validation_score
+base,regression,42,0.03,31,1,5000,200,0.7395508360717892
+lower_lr,regression,42,0.01,31,1,5000,200,0.7380333591687409
+small_trees,regression,42,0.03,15,1,5000,200,0.7331155336940748
+regularization,regression,42,0.03,31,10,5000,200,0.7402241051932809
+base,classification,42,0.03,31,1,5000,200,0.09932895587985932
+lower_lr,classification,42,0.01,31,1,5000,200,0.120347118654438
+small_trees,classification,42,0.03,15,1,5000,200,0.1327882719137669
+regularization,classification,42,0.03,31,10,5000,200,0.11962279916564182
