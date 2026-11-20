@@ -1,13 +1,19 @@
 import pandas as pd
 
+seed_runs = [
+    "task3/e2e_s42",
+    "task3/e2e_s43",
+    "task3/e2e_s44",
+    "task3/warmup5",
+    "task3/warmup5_s43",
+    "task3/warmup5_s44",
+]
+
 table = pd.read_csv("results_summary.csv")
-table = table[table["model"] == "atom_jepa"].copy()
-table["warmup_epochs"] = table["warmup_epochs"].fillna(0)
 
-config_columns = ["task", "model", "frozen", "warmup_epochs", "embeddings", "descriptors"]
+table = table[table["experiment"].isin(seed_runs)].copy()
 
-for column in config_columns:
-    table[column] = table[column].fillna("-")
+config_columns = ["task", "model", "frozen", "warmup_epochs"]
 
 grouped = table.groupby(config_columns)["score"]
 
