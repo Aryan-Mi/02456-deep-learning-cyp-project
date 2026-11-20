@@ -1,6 +1,8 @@
 import pandas as pd
 
 table = pd.read_csv("results_summary.csv")
+table = table[table["model"] == "atom_jepa"].copy()
+table["warmup_epochs"] = table["warmup_epochs"].fillna(0)
 
 config_columns = ["task", "model", "frozen", "warmup_epochs", "embeddings", "descriptors"]
 
