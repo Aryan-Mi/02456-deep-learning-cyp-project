@@ -24,11 +24,11 @@ CHEMELEON = OmegaConf.create(
             "hidden_dim": 512,
             "num_layers": 3,
             "dropout": 0.3,
-        }, # to change to epochs 20 and head only 5 before running on GPU
+        },
         "train": {
-            "epochs": 2,
+            "epochs": 20,
             "batch_size": 32,
-            "head_only_epochs": 1,
+            "head_only_epochs": 5,
             "weight_decay": 0.0,
             "grad_clip": 1.0,
             "reduce_lr": False,
@@ -89,7 +89,7 @@ LIGHTGBM = OmegaConf.create(
 
 all_models = {
     "chemeleon": CHEMELEON,
-    # "atom_jepa": ATOM_JEPA,
+    "atom_jepa": ATOM_JEPA,
     "lightgbm": LIGHTGBM,
 }
 

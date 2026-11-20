@@ -48,16 +48,18 @@ def main():
         del predict
         torch.cuda.empty_cache()
 
-    for split, dataset, predictions in [("validation", val_df, val_pred), ("test", test_df, test_pred)]:
-        avg_pred = np.mean(list(predictions.values()), axis=0)
-
-        for model in all_models:
-            print("model")
-            model_score = metrics(dataset, predictions[model], REG, "regression")["macro_ST-RAE"]
-            print(model_score)
-        ensamble_score = metrics(dataset, avg_pred, REG,"regression")["macro_ST-RAE"]
-        print("Ensamble score : ", ensamble_score)
-    
+    with open("ensembles/results.txt", "w") as f:
+        print("Regression ------------------------------", file = f)
+        for split, dataset, predictions in [("validation", val_df, val_pred), ("test", test_df, test_pred)]:
+            avg_pred = np.mean(list(predictions.values()), axis=0)
+            print(f"Split: {split} ------------------------", file = f)
+            for model in all_models:
+                print(f"model: {model}", file = f)
+                model_score = metrics(dataset, predictions[model], REG, "regression")["macro_ST-RAE"]
+                print(f"ST RAE model : {model_score}", file=f)
+            ensamble_score = metrics(dataset, avg_pred, REG,"regression")["macro_ST-RAE"]
+            print(f"Ensamble score : {ensamble_score}", file=f)
+        
 
 
 if __name__=="__main__":
