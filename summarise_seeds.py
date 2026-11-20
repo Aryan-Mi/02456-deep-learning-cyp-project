@@ -13,15 +13,16 @@ summary = grouped.agg(["count", "mean", "std", "min", "max"])
 summary = summary.reset_index()
 
 regression = summary[summary["task"] == "regression"].sort_values("mean")
-classification = summary[summary["task"] == "classification"].sort_values("mean", ascending=False)
+classification = summary[summary["task"] == "classification"].sort_values("mean", ascending = False)
 
 summary = pd.concat([regression, classification])
-summary.to_csv("results_summary_aggregated.csv", index=False)
+summary.to_csv("results_summary_aggregated.csv", index = False)
 
 
 print("Regression - remember: lower is better")
-
-print("Classification - remember: higher is better")
-print(classification.to_string(index=False))
-
-print("Saved results_by_config.csv")
+print(regression.to_string(index = False))
+print()
+print("Classification")
+print(classification.to_string(index = False))
+print()
+print("Saved in results_summary_aggregated.csv")
