@@ -1,0 +1,17 @@
+Regression ------------------------------
+Split: validation ------------------------
+model: chemeleon
+ST RAE model : 0.7195757303574528
+model: atom_jepa
+ST RAE model : 0.6921538367473872
+model: lightgbm
+ST RAE model : 0.7331155336940748
+Ensamble score : 0.6591813219010761
+Split: test ------------------------
+model: chemeleon
+ST RAE model : 0.7766066302585551
+model: atom_jepa
+ST RAE model : 0.728318262617677
+model: lightgbm
+ST RAE model : 0.7730476066774837
+Ensamble score : 0.6948489099037571
