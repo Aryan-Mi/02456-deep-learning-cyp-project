@@ -37,7 +37,6 @@ CHEMELEON = OmegaConf.create(
     }
 )
 
-# to be changed after Anyas best results
 ATOM_JEPA = OmegaConf.create(
     {
         "model": {
@@ -54,7 +53,7 @@ ATOM_JEPA = OmegaConf.create(
             "batch_size": 8,
             "weight_decay": 1.0e-4,
             "grad_clip": 1.0,
-            "head_only_epochs": 0,
+            "head_only_epochs": 5,
             "reduce_lr": False,
         },
         "device": DEVICE,
