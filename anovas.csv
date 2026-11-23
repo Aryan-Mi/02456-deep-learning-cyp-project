@@ -1,0 +1,7 @@
+direction,task,setups,p
+Freezing Strategies,regression,3,1.6508535540437078e-06
+Freezing Strategies,classification,3,0.00030518999656250833
+Readout Features,regression,3,1.3140552686992075e-06
+Readout Features,classification,3,0.19753938328994233
+Readout Architecture,regression,2,0.00015254349402815909
+Readout Architecture,classification,2,0.01816484528841063
