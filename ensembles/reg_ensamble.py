@@ -2,7 +2,7 @@ import sys
 import random
 import torch
 import numpy as np
-from best_models import DEVICE, ROOT, all_models
+from ensembles.best_models_reg import DEVICE, ROOT, all_models
 sys.path.insert(0, str(ROOT))
 from finetune import metrics, train_torch
 from models.gbm import LightGBMModel

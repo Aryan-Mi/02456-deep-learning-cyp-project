@@ -2,7 +2,7 @@ import sys
 import random
 import torch
 import numpy as np
-from best_models import DEVICE, ROOT, all_models
+from ensembles.best_models_cls import DEVICE, ROOT, all_models
 sys.path.insert(0, str(ROOT))
 from finetune import metrics, train_torch
 from models.gbm import LightGBMModel
@@ -48,7 +48,7 @@ def main():
         del predict
         torch.cuda.empty_cache()
 
-    with open("ensembles/results.txt", "w") as f:
+    with open("ensembles/results_classification.txt", "w") as f:
         print("Classification -------------------------", file = f)
         for split, dataset, predictions in [("validation", val_df, val_pred), ("test", test_df, test_pred)]:
             avg_pred = np.mean(list(predictions.values()), axis=0)
