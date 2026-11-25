@@ -1,12 +1,13 @@
 from pathlib import Path
+
 import torch
 from omegaconf import OmegaConf
 
-'''
+"""
 File with the best model configurations from parts 1-3 (to create an ensamble of the best models)
-'''
+"""
 
-ROOT = Path(__file__).resolve().parent.parent 
+ROOT = Path(__file__).resolve().parent.parent
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -14,11 +15,11 @@ CHEMELEON = OmegaConf.create(
     {
         "model": {
             "type": "chemeleon",
-            "checkpoint": str(ROOT/"checkpoints"/"chemeleon_mp.pt"),
+            "checkpoint": str(ROOT / "checkpoints" / "chemeleon_mp.pt"),
             "freeze_encoder": False,
             "readout_lr": 1e-3,
             "encoder_lr": 1e-4,
-        }, #lower dropout forclassif
+        },  # lower dropout forclassif
         "readout": {
             "type": "mlp",
             "hidden_dim": 512,
@@ -41,7 +42,7 @@ ATOM_JEPA = OmegaConf.create(
     {
         "model": {
             "type": "atom_jepa",
-            "checkpoint": "molecules",  
+            "checkpoint": "molecules",
             "precision": "fp32",
             "freeze_encoder": False,
             "encoder_lr": 1.0e-5,
@@ -68,7 +69,7 @@ LIGHTGBM = OmegaConf.create(
             "morgan": {"radius": 2, "n_bits": 1024, "use_counts": True},
             "feature_workers": 4,
             "early_stopping_rounds": 200,
-            "params": { 
+            "params": {
                 "n_estimators": 5000,
                 "learning_rate": 0.03,
                 "num_leaves": 15,
@@ -85,10 +86,8 @@ LIGHTGBM = OmegaConf.create(
 )
 
 
-
 all_models = {
     "chemeleon": CHEMELEON,
     "atom_jepa": ATOM_JEPA,
     "lightgbm": LIGHTGBM,
 }
-
