@@ -1,0 +1,17 @@
+Classification -------------------------
+Split: validation ---------------------------
+model: chemeleon
+MCC model : 0.26063301416432433
+model: atom_jepa
+MCC model : 0.2879983505330931
+model: lightgbm
+MCC model : 0.1327882719137669
+Ensamble score : 0.275725398266925
+Split: test ---------------------------
+model: chemeleon
+MCC model : 0.18198629825805945
+model: atom_jepa
+MCC model : 0.19484481434725795
+model: lightgbm
+MCC model : 0.13145865774391635
+Ensamble score : 0.2306957870443877
