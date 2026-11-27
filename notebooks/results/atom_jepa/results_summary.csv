@@ -1,0 +1,45 @@
+task,experiment,seed,model,frozen,warmup_epochs,embeddings,descriptors,epochs,best_epoch,score
+classification,task3/e2e_s42,42,atom_jepa,False,0.0,, ,20.0,8.0,0.3284557960047416
+classification,task3/e2e_s43,43,atom_jepa,False,0.0,, ,20.0,10.0,0.27907437891987275
+classification,task3/e2e_s44,44,atom_jepa,False,0.0,, ,20.0,9.0,0.2972640717439061
+classification,task3/frozen_s42,42,atom_jepa,True,0.0,, ,20.0,15.0,0.18922090914604098
+classification,task3/frozen_s43,43,atom_jepa,True,0.0,, ,20.0,13.0,0.15569798443801716
+classification,task3/frozen_s44,44,atom_jepa,True,0.0,, ,20.0,13.0,0.15532739317500438
+classification,task3/lgbm_both,42,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.13450672030818522
+classification,task3/lgbm_both_s43,43,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.12867452318012085
+classification,task3/lgbm_both_s44,44,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.1496446777147735
+classification,task3/lgbm_descriptors,42,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.09932895587985932
+classification,task3/lgbm_descriptors_s43,43,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.14141309560378562
+classification,task3/lgbm_descriptors_s44,44,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.13290247707044664
+classification,task3/lgbm_embeddings,42,atom_jepa_lgbm,,0.0,True,,,,0.10520394636985883
+classification,task3/lgbm_embeddings_s43,43,atom_jepa_lgbm,,0.0,True,,,,0.09134555797700006
+classification,task3/lgbm_embeddings_s44,44,atom_jepa_lgbm,,0.0,True,,,,0.12689126320222957
+classification,task3/warmup5,42,atom_jepa,False,5.0,, ,20.0,19.0,0.2901924198400746
+classification,task3/warmup5_s43,43,atom_jepa,False,5.0,, ,20.0,15.0,0.3158245890059717
+classification,task3/warmup5_s44,44,atom_jepa,False,5.0,, ,20.0,14.0,0.3308407091241483
+classification,task3/warmup5_test,42,atom_jepa,False,5.0,, ,20.0,10.0,0.28884079895889897
+classification,,42,atom_jepa,False,,, ,20.0,16.0,0.2709175477616592
+classification,,42,atom_jepa,True,,, ,20.0,15.0,0.17313509419949205
+regression,manual,42,atom_jepa,False,0.0,, ,20.0,7.0,0.6820286448900734
+regression,manual,42,atom_jepa,False,0.0,, ,20.0,4.0,0.6828316046374399
+regression,task3/e2e_s42,42,atom_jepa,False,0.0,, ,20.0,8.0,0.6869531108161965
+regression,task3/e2e_s43,43,atom_jepa,False,0.0,, ,20.0,12.0,0.6893235052850746
+regression,task3/e2e_s44,44,atom_jepa,False,0.0,, ,20.0,7.0,0.6827182843112138
+regression,task3/frozen_s42,42,atom_jepa,True,0.0,, ,20.0,16.0,0.7622589482154061
+regression,task3/frozen_s43,43,atom_jepa,True,0.0,, ,20.0,12.0,0.7591088495032083
+regression,task3/frozen_s44,44,atom_jepa,True,0.0,, ,20.0,13.0,0.765183284899416
+regression,task3/lgbm_both,42,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.7382685971539843
+regression,task3/lgbm_both_s43,43,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.7384846150691134
+regression,task3/lgbm_both_s44,44,atom_jepa_lgbm_both,,0.0,True,morgan rdkit,,,0.7448430362159205
+regression,task3/lgbm_descriptors,42,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.7395508360717892
+regression,task3/lgbm_descriptors_s43,43,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.7376151762830907
+regression,task3/lgbm_descriptors_s44,44,morgan_rdkit_lgbm,,0.0,,morgan rdkit,,,0.7446839474454878
+regression,task3/lgbm_embeddings,42,atom_jepa_lgbm,,0.0,True,,,,0.8026767817214762
+regression,task3/lgbm_embeddings_s43,43,atom_jepa_lgbm,,0.0,True,,,,0.8100222240143701
+regression,task3/lgbm_embeddings_s44,44,atom_jepa_lgbm,,0.0,True,,,,0.8117712628860818
+regression,task3/warmup5,42,atom_jepa,False,5.0,, ,20.0,12.0,0.6930869938777182
+regression,task3/warmup5_s43,43,atom_jepa,False,5.0,, ,20.0,10.0,0.6794660090536092
+regression,task3/warmup5_s44,44,atom_jepa,False,5.0,, ,20.0,10.0,0.6883491618347952
+regression,task3/warmup5_test,42,atom_jepa,False,5.0,, ,20.0,12.0,0.7019164448581199
+regression,,42,atom_jepa,False,,, ,20.0,8.0,0.6934480592839667
+regression,,42,atom_jepa,True,,, ,20.0,13.0,0.7828009569530802
