@@ -65,7 +65,7 @@ def anova(direction_name, groups):
         for setup_name in table["setup"].unique():
             score_groups.append(task_table[task_table["setup"] == setup_name]["score"])
 
-        result = stats.f_oneway(*score_groups)
+        result = stats.f_oneway(*score_groups, equal_var = False)
         anova_rows.append({"direction": direction_name, "task": task_name, "setups": len(score_groups), "p": result.pvalue})
 
         print(direction_name, "-", task_name, "- ANOVA across", len(score_groups), "setups, p =", result.pvalue)
@@ -118,7 +118,7 @@ def pairwise_tests(direction_name, groups, task_name):
         first_scores = task_table[task_table["setup"] == first_setup]["score"]
         second_scores = task_table[task_table["setup"] == second_setup]["score"]
 
-        result = stats.f_oneway(first_scores, second_scores)
+        result = stats.f_oneway(first_scores, second_scores, equal_var= False) # equal_var = False is Welch test
 
         if result.pvalue < corrected_threshold:
             verdict = "different"
